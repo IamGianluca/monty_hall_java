@@ -6,6 +6,10 @@ public class Game {
 
     public static void main(String[] args) {
 
+        if (args.length < 2) {
+            System.out.println("At the current stage the game runs only on a simulation mode. To use it you need to " +
+                    "pass two arguments: --simulation and the number of times you want the simulation to run. ");
+        }
         // if the "--simulation" argument is passed run a simulation using "args[1]" repetitions
         if ("--simulation".equals(args[0])) {
             simulate(Integer.parseInt(args[1]));
