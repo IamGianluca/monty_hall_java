@@ -6,6 +6,7 @@ import java.util.Random;
 public class Player {
 
     public void makeFirstGuess(ArrayList<Door> doors) {
+
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(doors.size());
         doors.get(index).setPlayerGuess(true);
