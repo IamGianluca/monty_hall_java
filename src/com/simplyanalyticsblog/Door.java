@@ -38,6 +38,4 @@ public class Door {
     public void setOpenDoor(boolean openDoor) {
         this.openDoor = openDoor;
     }
-
-
 }

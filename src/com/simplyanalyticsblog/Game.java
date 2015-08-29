@@ -1,7 +1,6 @@
 package com.simplyanalyticsblog;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Game {
 
@@ -15,19 +14,17 @@ public class Game {
 
         // if no arguments are passed, start a single player game
         if (args.length == 0) {
-            single_player_game();
+            play(1, true);
         } else if ("--simulation".equals(args[0])) {
             // if the "--simulation" argument is passed run a simulation using "args[1]" repetitions
-
-
-            simulate(Integer.parseInt(args[1]));
+            play(Integer.parseInt(args[1]), false);
         } else {
             System.out.println("Sorry, at the moment this game to run just on simulation mode. Stay tuned, a single " +
                     "player version is coming soon!");
         }
     }
 
-    public static void simulate(int repetitions) {
+    private static void play(int repetitions, boolean isRealPlayer) {
 
         for (int n = 0; n < repetitions; n++) {
             System.out.println(n + 1 + " / " + repetitions);
@@ -42,7 +39,7 @@ public class Game {
             doors.add(c);
 
             Host monty = new Host();
-            Player player = new Player();
+            Player player = new Player(isRealPlayer);
 
             // let Monty Hall hide the prize and the player pick its first guess
             monty.hidePrize(doors);
@@ -61,18 +58,5 @@ public class Game {
             }
             monty.revealFinalResult(doors);
         }
-    }
-
-    public static void single_player_game() {
-
-        System.out.println("Hi! You entered the 'single player' mode. The game is simple, just read the commands " +
-                "printed on your command line and stay with us.");
-
-        Scanner reader = new Scanner(System.in);
-        System.out.println("What's your name?");
-        String a = reader.next();
-
-        char initials = a.charAt(0);
-        System.out.println(initials);
     }
 }
