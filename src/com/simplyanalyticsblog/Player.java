@@ -1,7 +1,5 @@
 package com.simplyanalyticsblog;
 
-import com.sun.javafx.tk.ScreenConfigurationAccessor;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
