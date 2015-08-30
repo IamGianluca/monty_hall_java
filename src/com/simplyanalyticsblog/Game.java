@@ -6,12 +6,6 @@ public class Game {
 
     public static void main(String[] args) {
 
-        if (args.length != 0 && args.length != 2) {
-            System.out.println("You can play only on 'single player' mode or 'simulation'. If you want to play in " +
-                    "single player do not add any argument. If you want to use the simulation mode, type --simulation and" +
-                    "an integer number representing how many iteration you want to run as arguments.");
-        }
-
         // if no arguments are passed, start a single player game
         if (args.length == 0) {
             play(1, true);
@@ -19,8 +13,10 @@ public class Game {
             // if the "--simulation" argument is passed run a simulation using "args[1]" repetitions
             play(Integer.parseInt(args[1]), false);
         } else {
-            System.out.println("Sorry, at the moment this game to run just on simulation mode. Stay tuned, a single " +
-                    "player version is coming soon!");
+            System.out.println("You can play only on 'single player' or 'simulation' mode. If you want to play in " +
+                    "single player do not add any argument when you run the program. If you want to use the " +
+                    "simulation version of this game, type --simulation followed by the number of iterations of the " +
+                    "game you would like to run.");
         }
     }
 
