@@ -11,7 +11,15 @@ public class Game {
             play(1, true, false);
         } else if ("--simulation".equals(args[0])) {
             // if the "--simulation" argument is passed, run a simulation iterating "args[1]" times
-            play(Integer.parseInt(args[1]), false, false);
+            boolean verbose;
+            // TODO: fix verbose logic. If `--verbose` is spelled wrongly it should raise an error
+            if (args.length == 3 && "--verbose".equals(args[2])) {
+                verbose = true;
+            } else {
+                verbose = false;
+            }
+            play(Integer.parseInt(args[1]), false, verbose);
+
         } else {
             System.out.println("You can play only on 'single player' or 'simulation' mode. If you want to play in " +
                     "single player do not add any argument when you run the program. If you want to use the " +
