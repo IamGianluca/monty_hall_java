@@ -8,10 +8,18 @@ public class Game {
 
         // if no arguments are passed, start a single player game
         if (args.length == 0) {
-            play(1, true);
+            play(1, true, false);
         } else if ("--simulation".equals(args[0])) {
             // if the "--simulation" argument is passed, run a simulation iterating "args[1]" times
-            play(Integer.parseInt(args[1]), false);
+            boolean verbose;
+            // TODO: fix verbose logic. If `--verbose` is spelled wrongly it should raise an error
+            if (args.length == 3 && "--verbose".equals(args[2])) {
+                verbose = true;
+            } else {
+                verbose = false;
+            }
+            play(Integer.parseInt(args[1]), false, verbose);
+
         } else {
             System.out.println("You can play only on 'single player' or 'simulation' mode. If you want to play in " +
                     "single player do not add any argument when you run the program. If you want to use the " +
@@ -20,7 +28,7 @@ public class Game {
         }
     }
 
-    private static void play(int repetitions, boolean isRealPlayer) {
+    private static void play(int repetitions, boolean isRealPlayer, boolean verbose) {
 
         String NOSWITCH_LOST = "Player didn't switch door and lost";
         String NOSWITCH_WIN = "Player didn't switch door and won";
@@ -30,7 +38,9 @@ public class Game {
         ArrayList<String> results = new ArrayList<String>(repetitions);
 
         for (int n = 0; n < repetitions; n++) {
-            System.out.println(n + 1 + " / " + repetitions);
+            if (verbose) {
+                System.out.println(n + 1 + " / " + repetitions);
+            }
 
             Door a = new Door("A");
             Door b = new Door("B");
@@ -45,25 +55,26 @@ public class Game {
             Player player = new Player(isRealPlayer);
 
             // let Monty Hall hide the prize and the player pick its first guess
-            monty.hidePrize(doors);
-            player.makeFirstGuess(doors);
+            monty.hidePrize(doors, verbose);
+            player.makeFirstGuess(doors, verbose);
 
             // Monty Hall opens one door
-            monty.openDoor(doors);
+            monty.openDoor(doors, verbose);
 
             // player has a chance to switch door
-            player.makeSecondGuess(doors);
+            player.makeSecondGuess(doors, verbose);
 
-            // print state after the player made his final choice
-            for (Door door : doors) {
-                System.out.println("Door " + door.getName() + " --> is winning door: " +
-                        door.isWinningDoor() + ", is player choice : " + door.isPlayerGuess());
+            // if not in simulation mode, print state after the player made his final choice
+            if (isRealPlayer) {
+                for (Door door : doors) {
+                    System.out.println("Door " + door.getName() + " --> is winning door: " +
+                            door.isWinningDoor() + ", is player choice : " + door.isPlayerGuess());
+                }
             }
-            results.add(monty.revealFinalResult(doors));
+            results.add(monty.revealFinalResult(doors, verbose));
         }
 
         // print final results
-        System.out.println(results.toString());
         Integer wins = 0;
         for (String result : results) {
             if (result.equals("win")) {
