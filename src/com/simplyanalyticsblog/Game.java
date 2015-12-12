@@ -10,17 +10,24 @@ public class Game {
         if (args.length == 0) {
             play(1, true);
         } else if ("--simulation".equals(args[0])) {
-            // if the "--simulation" argument is passed run a simulation using "args[1]" repetitions
+            // if the "--simulation" argument is passed, run a simulation iterating "args[1]" times
             play(Integer.parseInt(args[1]), false);
         } else {
             System.out.println("You can play only on 'single player' or 'simulation' mode. If you want to play in " +
                     "single player do not add any argument when you run the program. If you want to use the " +
-                    "simulation version of this game, type --simulation followed by the number of iterations of the " +
-                    "game you would like to run.");
+                    "simulation version of this game, type `--simulation` followed by the number of iterations " +
+                    "you would like to run.");
         }
     }
 
     private static void play(int repetitions, boolean isRealPlayer) {
+
+        String NOSWITCH_LOST = "Player didn't switch door and lost";
+        String NOSWITCH_WIN = "Player didn't switch door and won";
+        String SWITCH_LOST = "Player switched door and lost";
+        String SWITCH_WIN = "Player switched door and won";
+
+        ArrayList<String> results = new ArrayList<String>(repetitions);
 
         for (int n = 0; n < repetitions; n++) {
             System.out.println(n + 1 + " / " + repetitions);
@@ -48,11 +55,21 @@ public class Game {
             player.makeSecondGuess(doors);
 
             // print state after the player made his final choice
-            for (int i = 0; i < doors.size(); i++) {
-                System.out.println("Door " + doors.get(i).getName() + " --> is winning door: " +
-                        doors.get(i).isWinningDoor() + ", is player choice : " + doors.get(i).isPlayerGuess());
+            for (Door door : doors) {
+                System.out.println("Door " + door.getName() + " --> is winning door: " +
+                        door.isWinningDoor() + ", is player choice : " + door.isPlayerGuess());
             }
-            monty.revealFinalResult(doors);
+            results.add(monty.revealFinalResult(doors));
         }
+
+        // print final results
+        System.out.println(results.toString());
+        Integer wins = 0;
+        for (String result : results) {
+            if (result.equals("win")) {
+                wins += 1;
+            }
+        }
+        System.out.println("You won " + wins + " out of " + results.size() + " games");
     }
 }

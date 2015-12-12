@@ -22,15 +22,18 @@ public class Host {
         }
     }
 
-    public void revealFinalResult(ArrayList<Door> doors) {
+    public String revealFinalResult(ArrayList<Door> doors) {
         for (Door door : doors) {
             if (door.isPlayerGuess()) {
                 if (door.isWinningDoor()) {
                     System.out.println("Congratulations.. you WON!");
+                    return "win";
                 } else {
                     System.out.println("What a pity.. you LOST");
+                    return "lost";
                 }
             }
         }
+        return "error";
     }
 }
