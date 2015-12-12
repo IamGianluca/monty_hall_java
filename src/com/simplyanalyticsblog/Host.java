@@ -5,31 +5,39 @@ import java.util.Random;
 
 public class Host {
 
-    public void hidePrize(ArrayList<Door> doors) {
+    public void hidePrize(ArrayList<Door> doors, boolean verbose) {
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(doors.size());
         doors.get(index).setWinningDoor(true);
-        System.out.println("Winning door: " + doors.get(index).getName());
+        if (verbose) {
+            System.out.println("Winning door: " + doors.get(index).getName());
+        }
     }
 
-    public void openDoor(ArrayList<Door> doors) {
+    public void openDoor(ArrayList<Door> doors, boolean verbose) {
         for (Door door : doors) {
             if (!door.isWinningDoor() && !door.isPlayerGuess()) {
                 door.setOpenDoor(true);
-                System.out.println("Monty opens door: " + door.getName());
+                if (verbose) {
+                    System.out.println("Monty opens door: " + door.getName());
+                }
                 break;
             }
         }
     }
 
-    public String revealFinalResult(ArrayList<Door> doors) {
+    public String revealFinalResult(ArrayList<Door> doors, boolean verbose) {
         for (Door door : doors) {
             if (door.isPlayerGuess()) {
                 if (door.isWinningDoor()) {
-                    System.out.println("Congratulations.. you WON!");
+                    if (verbose) {
+                        System.out.println("Congratulations.. you WON!");
+                    }
                     return "win";
                 } else {
-                    System.out.println("What a pity.. you LOST");
+                    if (verbose) {
+                        System.out.println("What a pity.. you LOST");
+                    }
                     return "lost";
                 }
             }

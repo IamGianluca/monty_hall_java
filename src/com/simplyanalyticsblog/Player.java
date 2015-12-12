@@ -12,14 +12,16 @@ public class Player {
         this.realPlayer = realPlayer;
     }
 
-    public void makeFirstGuess(ArrayList<Door> doors) {
+    public void makeFirstGuess(ArrayList<Door> doors, boolean verbose) {
 
         if (!this.realPlayer) {
 
             Random randomGenerator = new Random();
             int index = randomGenerator.nextInt(doors.size());
             doors.get(index).setPlayerGuess(true);
-            System.out.println("Player first guess: " + doors.get(index).getName());
+            if (verbose) {
+                System.out.println("Player first guess: " + doors.get(index).getName());
+            }
 
         } else {
 
@@ -33,7 +35,7 @@ public class Player {
         }
     }
 
-    public void makeSecondGuess(ArrayList<Door> doors) {
+    public void makeSecondGuess(ArrayList<Door> doors, boolean verbose) {
 
         if (!this.realPlayer) {
 
@@ -42,7 +44,9 @@ public class Player {
             int index = randomGenerator.nextInt(options.length());
             char decision = options.charAt(index);
 
-            System.out.println("Does the player switch door?: " + decision);
+            if (verbose) {
+                System.out.println("Does the player switch door?: " + decision);
+            }
 
             char y = 'y';
             if (y == decision) {
