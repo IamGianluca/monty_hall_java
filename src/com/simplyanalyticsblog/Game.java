@@ -10,11 +10,17 @@ public class Game {
         if (args.length == 0) {
             play(1, true, false);
         } else if ("--simulation".equals(args[0])) {
-            // if the "--simulation" argument is passed, run a simulation iterating "args[1]" times
-            boolean verbose;
-            // TODO: fix verbose logic. If `--verbose` is spelled wrongly it should raise an error
+            // if the "--simulation" argument is passed, run a simulation iterating `args[1]` times
+            // the simulation mode has an optional `verbose` method. When verbose is called intermediate results
+            //   for each game are printed
+            boolean verbose = false;
             if (args.length == 3 && "--verbose".equals(args[2])) {
                 verbose = true;
+            } else if (args.length == 3 && !"--verbose".equals(args[2])) {
+                System.out.println("Did you mean to call the `--verbose` method? If so, just add the optional " +
+                        "argument `--verbose` at the end of your call. The verbose method is only available when " +
+                        "running a simulation");
+                System.exit(0);
             } else {
                 verbose = false;
             }
