@@ -54,16 +54,17 @@ public class Game {
             // player has a chance to switch door
             player.makeSecondGuess(doors);
 
-            // print state after the player made his final choice
-            for (Door door : doors) {
-                System.out.println("Door " + door.getName() + " --> is winning door: " +
-                        door.isWinningDoor() + ", is player choice : " + door.isPlayerGuess());
+            // if not in simulation mode, print state after the player made his final choice
+            if (isRealPlayer) {
+                for (Door door : doors) {
+                    System.out.println("Door " + door.getName() + " --> is winning door: " +
+                            door.isWinningDoor() + ", is player choice : " + door.isPlayerGuess());
+                }
             }
             results.add(monty.revealFinalResult(doors));
         }
 
         // print final results
-        System.out.println(results.toString());
         Integer wins = 0;
         for (String result : results) {
             if (result.equals("win")) {
